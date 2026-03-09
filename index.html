@@ -91,8 +91,6 @@ body{font-family:'Plus Jakarta Sans','Noto Sans Devanagari',sans-serif;backgroun
 
 /* ── DETAIL SCREEN ── */
 .d-body{padding:0 0 100px;}
-
-/* Row style matching reference screenshot */
 .d-row{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border-bottom:1px solid var(--border);background:#fff;cursor:default;}
 .d-row.clickable{cursor:pointer;}
 .d-row.clickable:active{background:var(--gl);}
@@ -100,18 +98,12 @@ body{font-family:'Plus Jakarta Sans','Noto Sans Devanagari',sans-serif;backgroun
 .d-row-main{flex:1;min-width:0;}
 .d-row-title{font-size:16px;font-weight:600;color:var(--text);}
 .d-row-sub{font-size:13px;color:var(--muted);margin-top:2px;}
-.d-row-right{flex-shrink:0;display:flex;align-items:center;gap:8px;}
-
-/* Notes */
 .notes-area{width:100%;border:none;outline:none;font-family:inherit;font-size:15px;color:var(--text);line-height:1.6;resize:none;background:transparent;min-height:60px;}
 .notes-area::placeholder{color:var(--muted);}
-
-/* Subtasks section */
 .st-section{background:#fff;border-bottom:1px solid var(--border);}
 .st-hdr{display:flex;align-items:center;gap:14px;padding:15px 18px 12px;border-bottom:1px solid var(--border);}
 .st-hdr-ico{font-size:18px;width:26px;text-align:center;flex-shrink:0;}
 .st-hdr-title{font-size:16px;font-weight:600;flex:1;}
-.st-add-btn{background:#222;color:#fff;border:none;width:28px;height:28px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .st-row{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--gl);cursor:pointer;transition:background .15s;}
 .st-row:last-child{border-bottom:none;}
 .st-row:active{background:var(--gl);}
@@ -120,44 +112,19 @@ body{font-family:'Plus Jakarta Sans','Noto Sans Devanagari',sans-serif;backgroun
 .chk-circle.on::after{content:'✓';color:#fff;font-size:13px;font-weight:900;}
 .st-label{font-size:15px;font-weight:500;flex:1;}
 .st-label.done{text-decoration:line-through;color:var(--muted);}
-
-/* Priority */
-.pri-opts{display:flex;gap:20px;padding:8px 0 10px;}
-.p-opt{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:14px;font-weight:500;}
-.p-radio{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--border);display:flex;align-items:center;justify-content:center;transition:.18s;}
-.p-radio.sel{border-color:var(--g);}
-.p-radio.sel::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--g);display:block;}
-
-/* Round checkmark rows */
-.chk-row{display:flex;align-items:center;gap:14px;padding:15px 18px;border-bottom:1px solid var(--border);background:#fff;cursor:pointer;}
-.chk-row:active{background:var(--gl);}
-.round-chk{width:28px;height:28px;border-radius:50%;border:2.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.18s;}
-.round-chk.on{background:var(--g);border-color:var(--g);}
-.round-chk.on::after{content:'✓';color:#fff;font-size:14px;font-weight:900;}
-.chk-body{flex:1;}
-.chk-title{font-size:15px;font-weight:600;}
-.chk-sub{font-size:12px;color:var(--muted);margin-top:2px;}
-
-/* Toggle */
-.toggle{width:44px;height:26px;border-radius:13px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
-.toggle-thumb{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
-
-/* Tags */
-.tags-area{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-top:8px;}
-.tag-chip{background:var(--gl);color:var(--gd);border:1px solid var(--gm);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px;}
-.tag-x{cursor:pointer;color:var(--muted);font-size:14px;line-height:1;}
-.tag-inp{border:none;outline:none;font-family:inherit;font-size:13px;background:transparent;color:var(--text);min-width:90px;}
-
-/* Save FAB (yellow) */
 .save-fab{position:fixed;right:22px;bottom:28px;width:60px;height:60px;border-radius:50%;background:#f59e0b;border:none;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 6px 20px rgba(245,158,11,.5);z-index:200;display:flex;align-items:center;justify-content:center;transition:.22s;}
 .save-fab:hover{transform:scale(1.1);}
+
+/* SETTINGS SIDEBAR STYLES */
+#sidebarOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;}
+#settingsSidebar{position:fixed;top:0;left:-320px;width:280px;height:100%;background:#fff;z-index:1000;transition:0.3s ease;padding:20px;box-shadow:2px 0 10px rgba(0,0,0,0.2);overflow-y:auto;}
 </style>
 </head>
 <body>
 
-<!-- HOME SCREEN -->
 <div class="screen active" id="homeScreen">
   <header class="hdr">
+    <span id="openSettingsBtn" style="font-size:24px;cursor:pointer;flex-shrink:0;">☰</span>
     <div class="hdr-title">📚 StudyPath Pro</div>
     <div class="hdr-icons">
       <button class="hdr-icon" id="statsBtn" style="font-size:12px;font-weight:700;width:auto;padding:0 10px;border-radius:20px;">✅ 0/0</button>
@@ -178,14 +145,26 @@ body{font-family:'Plus Jakarta Sans','Noto Sans Devanagari',sans-serif;backgroun
   <button class="fab" id="addTopicFab" title="नया टॉपिक जोड़ें">+</button>
 </div>
 
-<!-- DETAIL SCREEN -->
+<div id="sidebarOverlay"></div>
+<div id="settingsSidebar">
+    <h2 style="margin-top:0;color:var(--g);border-bottom:2px solid var(--border);padding-bottom:10px;font-size:20px;">⚙️ सेटिंग्स</h2>
+    
+    <div style="background:var(--bg);padding:15px;border-radius:10px;margin-bottom:20px;text-align:center;border:1px solid var(--border);">
+        <p style="margin:0;font-weight:bold;color:var(--text);font-size:16px;">StudyPath Pro</p>
+        <p style="margin:4px 0 0 0;font-size:13px;color:var(--g);">Developed by Dev</p>
+    </div>
+    
+    <h3 style="font-size:15px;color:var(--text);margin-bottom:12px;">📚 सब्जेक्ट्स मैनेज करें</h3>
+    <div id="settingsSubList" style="margin-bottom:20px;"></div>
+    
+    <button id="closeSettingsBtn" style="width:100%;padding:12px;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-weight:bold;cursor:pointer;">❌ बंद करें</button>
+</div>
+
 <div class="screen" id="detailScreen">
   <header class="hdr">
     <button class="hdr-back" id="detailBack">←</button>
     <div class="hdr-title" id="detailHdrTitle"></div>
     <div class="hdr-icons">
-      <button class="hdr-icon">📅</button>
-      <button class="hdr-icon">⬆</button>
       <button class="hdr-icon" id="deleteTopicBtn">🗑</button>
     </div>
   </header>
@@ -193,7 +172,6 @@ body{font-family:'Plus Jakarta Sans','Noto Sans Devanagari',sans-serif;backgroun
   <button class="save-fab" id="saveFab">✓</button>
 </div>
 
-<!-- PROMPT MODAL -->
 <div class="modal-bg" id="modalBg">
   <div class="modal-box">
     <div class="m-title" id="mTitle"></div>
@@ -207,9 +185,28 @@ body{font-family:'Plus Jakarta Sans','Noto Sans Devanagari',sans-serif;backgroun
 </div>
 
 <script>
-// ════ DATA ════
-let D = JSON.parse(localStorage.getItem('sp4')||'null') || {subjects:[]};
-let curSub = 0, curTopic = null, promptCb = null, curTags = [];
+// ════ DATA INITIALIZATION & DEFAULTS ════
+let D = JSON.parse(localStorage.getItem('sp4') || 'null');
+
+// अगर ऐप पहली बार खुला है या डेटा खाली है, तो डिफ़ॉल्ट सब्जेक्ट्स डाल दें
+if (!D || !D.subjects || D.subjects.length === 0) {
+  D = {
+    subjects: [
+      {name: 'Raj Geo.', topics: []},
+      {name: 'Raj Art.', topics: []},
+      {name: 'Raj His.', topics: []},
+      {name: 'Raj Politics', topics: []},
+      {name: 'Ind Geo.', topics: []},
+      {name: 'Ind Politics', topics: []},
+      {name: 'World geography', topics: []},
+      {name: 'Psychology', topics: []},
+      {name: 'Economics', topics: []}
+    ]
+  };
+  localStorage.setItem('sp4', JSON.stringify(D));
+}
+
+let curSub = 0, curTopic = null, promptCb = null;
 
 const ST_DEFS = [
   {key:'read',  label:'📖 Reading / Video'},
@@ -219,11 +216,11 @@ const ST_DEFS = [
 ];
 
 function save(){ localStorage.setItem('sp4', JSON.stringify(D)); }
-
 function fmtTime(d){
   const h=d.getHours(), m=String(d.getMinutes()).padStart(2,'0');
   return (h%12||12)+':'+m+' '+(h<12?'AM':'PM');
 }
+function el(tag, cls){ const e=document.createElement(tag); if(cls) e.className=cls; return e; }
 
 // ════ PROMPT ════
 function showPrompt(title, sub, placeholder, okTxt, cb){
@@ -238,7 +235,7 @@ function showPrompt(title, sub, placeholder, okTxt, cb){
 }
 document.getElementById('mCancel').onclick = ()=>{ document.getElementById('modalBg').classList.remove('open'); promptCb=null; };
 document.getElementById('mOk').onclick = doPrompt;
-document.getElementById('mInput').onkeydown = e=>{ if(e.key==='Enter') doPrompt(); if(e.key==='Escape'){ document.getElementById('modalBg').classList.remove('open'); promptCb=null; } };
+document.getElementById('mInput').onkeydown = e=>{ if(e.key==='Enter') doPrompt(); if(e.key==='Escape'){ document.getElementById('mCancel').click(); } };
 function doPrompt(){
   const v = document.getElementById('mInput').value.trim();
   document.getElementById('modalBg').classList.remove('open');
@@ -272,7 +269,7 @@ function renderTopics(){
   const list = document.getElementById('topicsList');
   list.innerHTML = '';
   if(!D.subjects.length){
-    list.innerHTML=`<div class="empty"><div class="empty-ico">📚</div><div class="empty-t">कोई विषय नहीं</div><p style="font-size:13px">ऊपर + बटन से विषय जोड़ें</p></div>`;
+    list.innerHTML=`<div class="empty"><div class="empty-ico">📚</div><div class="empty-t">कोई विषय नहीं</div><p style="font-size:13px">ऊपर + बटन से या सेटिंग्स से विषय जोड़ें</p></div>`;
     document.getElementById('secTitle').textContent='Subjects';
     document.getElementById('cntBadge').textContent='0';
     return;
@@ -298,14 +295,13 @@ function renderTopics(){
       <div class="t-icon">${full?'✅':'📖'}</div>
       <div class="t-body">
         <div class="t-name">${t.name}</div>
-        <div class="t-status"><span class="dot ${dotCls}"></span>${status}${t.dueDate?' &nbsp;📅 '+t.dueDate:''}</div>
+        <div class="t-status"><span class="dot ${dotCls}"></span>${status}</div>
         <div class="t-pills">${pills}</div>
       </div>
       <div class="ring-wrap">
         <svg width="40" height="40">
           <circle cx="20" cy="20" r="${R}" fill="none" stroke="var(--gm)" stroke-width="3"/>
-          <circle cx="20" cy="20" r="${R}" fill="none" stroke="${full?'#22c55e':'var(--g)'}" stroke-width="3" stroke-linecap="round"
-            stroke-dasharray="${C}" stroke-dashoffset="${C-(pct/100)*C}"/>
+          <circle cx="20" cy="20" r="${R}" fill="none" stroke="${full?'#22c55e':'var(--g)'}" stroke-width="3" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C-(pct/100)*C}"/>
         </svg>
         <div class="ring-lbl">${pct}%</div>
       </div>`;
@@ -314,38 +310,33 @@ function renderTopics(){
   });
 }
 
-// ════ ADD SUBJECT ════
+// ════ ADD BUTTONS ════
 document.getElementById('addSubBtn').onclick = ()=>{
-  showPrompt('नया विषय जोड़ें','विषय का नाम लिखें','जैसे: राज GEO, History, ART','जोड़ें', name=>{
+  showPrompt('नया विषय जोड़ें','विषय का नाम लिखें','जैसे: Math, English','जोड़ें', name=>{
     D.subjects.push({name, topics:[]});
     curSub = D.subjects.length-1;
     save(); renderAll();
   });
 };
 
-// ════ ADD TOPIC ════
 document.getElementById('addTopicFab').onclick = ()=>{
   if(!D.subjects.length){
-    showPrompt('पहले विषय जोड़ें','विषय का नाम लिखें','जैसे: Geography','जोड़ें', name=>{
-      D.subjects.push({name, topics:[]}); curSub=0; save(); renderAll();
-    }); return;
+    alert('कृपया पहले एक विषय जोड़ें!');
+    return;
   }
-  showPrompt('नया टॉपिक जोड़ें','टॉपिक का नाम लिखें','जैसे: जलवायु, भौतिक प्रदेश','जोड़ें', name=>{
+  showPrompt('नया टॉपिक जोड़ें','टॉपिक का नाम लिखें','जैसे: जलवायु','जोड़ें', name=>{
     D.subjects[curSub].topics.push({
-      name, notes:'', tags:[], dueDate:'', priority:'none',
-      reminder:false, highlight:false, completed:false, completedAt:'',
-      allDay:false, createdAt: fmtTime(new Date()),
+      name, notes:'', completed:false, completedAt:'',
       subtasks: ST_DEFS.map(d=>({...d, done:false}))
     });
     save(); renderAll();
   });
 };
 
-// ════ DETAIL ════
+// ════ DETAIL SCREEN ════
 function openDetail(idx){
   curTopic = idx;
   const t = D.subjects[curSub].topics[idx];
-  curTags = Array.isArray(t.tags) ? [...t.tags] : [];
   document.getElementById('detailHdrTitle').textContent = t.name;
   buildDetail(t);
   document.getElementById('homeScreen').classList.remove('active');
@@ -357,236 +348,115 @@ function buildDetail(t){
   const body = document.getElementById('detailBody');
   body.innerHTML = '';
 
-  // 1. NOTES HEADER ROW
-  const notesHdr = el('div','d-row');
-  notesHdr.innerHTML = `<div class="d-row-ico">☰</div><div class="d-row-main"><div class="d-row-title">Notes</div><div class="d-row-sub">Tap to add notes</div></div>`;
-  body.appendChild(notesHdr);
-
-  // Notes textarea row
+  // Notes
   const notesRow = el('div','d-row');
-  notesRow.style.paddingTop='8px';
+  notesRow.style.paddingTop='15px';
   const ta = document.createElement('textarea');
   ta.className='notes-area'; ta.id='dNotes'; ta.rows=3;
   ta.placeholder='यहाँ नोट्स लिखें...';
   ta.value = t.notes||'';
-  notesRow.innerHTML='<div class="d-row-ico"></div><div class="d-row-main" style="flex:1;"></div>';
+  notesRow.innerHTML='<div class="d-row-ico">📝</div><div class="d-row-main" style="flex:1;"></div>';
   notesRow.querySelector('.d-row-main').appendChild(ta);
   body.appendChild(notesRow);
 
-  // 2. ATTACHMENT
-  const attRow = el('div','d-row clickable');
-  attRow.innerHTML = `
-    <div class="d-row-ico">📷</div>
-    <div class="d-row-main"><div class="d-row-title">Attachment</div></div>
-    <div class="d-row-right">
-      <label style="cursor:pointer;font-size:22px;line-height:1;">🖼<input type="file" style="display:none" accept="image/*,application/pdf"></label>
-      <label style="cursor:pointer;font-size:22px;line-height:1;">📷<input type="file" style="display:none" accept="image/*" capture="environment"></label>
-    </div>`;
-  body.appendChild(attRow);
-
-  // 3. SUBTASKS
+    // Subtasks
   const stSec = el('div','st-section');
   const stHdr = el('div','st-hdr');
-  stHdr.innerHTML = `<div class="st-hdr-ico">☰</div><div class="st-hdr-title">Sub Tasks</div>`;
-  const stAddBtn = document.createElement('button');
-  stAddBtn.className='st-add-btn'; stAddBtn.textContent='+';
-  stAddBtn.onclick = ()=>{
-    showPrompt('नया Sub-Task','नाम लिखें','जैसे: Write summary','जोड़ें', name=>{
-      t.subtasks.push({key:'c'+Date.now(), label:'📌 '+name, done:false});
-      save(); rebuildSubtasks(t);
-    });
-  };
-  stHdr.appendChild(stAddBtn);
+  stHdr.innerHTML = `<div class="st-hdr-ico">✓</div><div class="st-hdr-title">चेकलिस्ट / कार्य</div>`;
   stSec.appendChild(stHdr);
-  const stList = el('div',''); stList.id='stList';
-  stSec.appendChild(stList);
+  
+  t.subtasks.forEach(st => {
+    const row = el('div','st-row');
+    row.innerHTML = `<div class="chk-circle ${st.done?'on':''}"></div><div class="st-label ${st.done?'done':''}">${st.label}</div>`;
+    row.onclick = () => {
+      st.done = !st.done;
+      row.querySelector('.chk-circle').className = 'chk-circle '+(st.done?'on':'');
+      row.querySelector('.st-label').className = 'st-label '+(st.done?'done':'');
+    };
+    stSec.appendChild(row);
+  });
   body.appendChild(stSec);
-  rebuildSubtasks(t);
-
-  // 4. LIST (Subject name)
-  const listRow = el('div','d-row');
-  listRow.innerHTML = `<div class="d-row-ico" style="color:var(--g)">☰</div><div class="d-row-main"><div class="d-row-title">List</div><div class="d-row-sub">${D.subjects[curSub].name}</div></div>`;
-  body.appendChild(listRow);
-
-  // 5. TAGS
-  const tagsRow = el('div','d-row');
-  tagsRow.style.flexDirection='column';tagsRow.style.alignItems='stretch';
-  const tagsTop = el('div','');
-  tagsTop.style.cssText='display:flex;align-items:center;gap:14px;';
-  tagsTop.innerHTML=`<div class="d-row-ico">🏷</div><div class="d-row-main"><div class="d-row-title">Tags</div><div class="d-row-sub">No tags selected</div></div>`;
-  const addTagBtn = document.createElement('button');
-  addTagBtn.style.cssText='background:#222;color:#fff;border:none;width:28px;height:28px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;';
-  addTagBtn.textContent='+';
-  addTagBtn.onclick=()=>{ const inp=document.getElementById('tagInp'); if(inp) inp.focus(); };
-  tagsTop.appendChild(addTagBtn);
-  tagsRow.appendChild(tagsTop);
-  const tagsInner = el('div','');
-  tagsInner.style.cssText='padding:0 0 4px 40px;';
-  tagsInner.innerHTML=`<div class="tags-area" id="tagsArea"></div>`;
-  tagsRow.appendChild(tagsInner);
-  body.appendChild(tagsRow);
-  renderTagChips(t);
-
-  // 6. DUE DATE
-  const dateRow = el('div','d-row clickable');
-  dateRow.id='dateRow';
-  const allDayOn = t.allDay||false;
-  dateRow.innerHTML = `
-    <div class="d-row-ico">⏰</div>
-    <div class="d-row-main"><div class="d-row-title">Due Date</div><div class="d-row-sub" id="dueSub">${t.dueDate||'No reminder set'}</div></div>
-    <div class="d-row-right" style="flex-direction:column;align-items:flex-end;gap:4px;">
-      <div style="font-size:11px;color:var(--muted)">All Day</div>
-      <div class="toggle" id="allDayTog" style="background:${allDayOn?'var(--g)':'var(--border)'};">
-        <div class="toggle-thumb" style="left:${allDayOn?'21':'3'}px;"></div>
-      </div>
-    </div>`;
-  dateRow.querySelector('.d-row-main').onclick=()=>{
-    const inp=document.createElement('input'); inp.type='date';
-    inp.style.cssText='position:fixed;opacity:0;z-index:9999;top:50%;left:50%;width:1px;height:1px;';
-    inp.value=t.dueDate||'';
-    document.body.appendChild(inp);
-    inp.onchange=()=>{ t.dueDate=inp.value; const s=document.getElementById('dueSub'); if(s) s.textContent=t.dueDate||'No reminder set'; save(); document.body.removeChild(inp); };
-    inp.focus(); inp.click(); setTimeout(()=>{ try{document.body.removeChild(inp);}catch(e){} },5000);
-  };
-  document.getElementById && setTimeout(()=>{
-    const tog=document.getElementById('allDayTog');
-    if(tog) tog.onclick=()=>{
-      t.allDay=!t.allDay; save();
-      tog.style.background=t.allDay?'var(--g)':'var(--border)';
-      tog.querySelector('.toggle-thumb').style.left=t.allDay?'21px':'3px';
-    };
-  },50);
-  body.appendChild(dateRow);
-
-  // 7. REMINDER
-  const remRow = el('div','d-row clickable');
-  remRow.innerHTML=`<div class="d-row-ico" id="remIco">${t.reminder?'🔔':'🔕'}</div><div class="d-row-main"><div class="d-row-title">Reminder</div><div class="d-row-sub" id="remSub">${t.reminder?'Reminder set':"Don't remind me"}</div></div>`;
-  remRow.onclick=()=>{ t.reminder=!t.reminder; document.getElementById('remIco').textContent=t.reminder?'🔔':'🔕'; document.getElementById('remSub').textContent=t.reminder?'Reminder set':"Don't remind me"; save(); };
-  body.appendChild(remRow);
-
-  // 8. PRIORITY
-  const priRow = el('div','d-row');
-  priRow.style.flexDirection='column';priRow.style.alignItems='stretch';
-  const priTop = el('div','');
-  priTop.style.cssText='display:flex;align-items:center;gap:14px;';
-  priTop.innerHTML=`<div class="d-row-ico">🚩</div><div class="d-row-main"><div class="d-row-title">Priority <span style="font-size:13px;color:var(--muted);font-weight:400;" id="priLabel">${t.priority==='none'?'None':t.priority}</span></div></div>`;
-  priRow.appendChild(priTop);
-  const priOpts = el('div','');
-  priOpts.style.cssText='padding:8px 0 10px 40px;';
-  const opts=[{v:'none',ico:'🏴',label:''},{v:'Low',ico:'🟡',label:'Low'},{v:'Medium',ico:'🟠',label:'Med'},{v:'High',ico:'🔴',label:'High'}];
-  priOpts.innerHTML='<div class="pri-opts">'+opts.map(o=>`<div class="p-opt" onclick="setPri('${o.v}')"><div class="p-radio${t.priority===o.v?' sel':''}" id="pr_${o.v}"></div><span>${o.ico}</span></div>`).join('')+'</div>';
-  priRow.appendChild(priOpts);
-  body.appendChild(priRow);
-
-  // 9. HIGHLIGHT
-  const hlRow = el('div','chk-row');
-  hlRow.innerHTML=`<div class="round-chk${t.highlight?' on':''}" id="hlChk"></div><div class="chk-body"><div class="chk-title">★ Highlight</div><div class="chk-sub">Make this task stand out in the list view</div></div><span style="font-size:22px;">🎨</span>`;
-  hlRow.onclick=()=>{ t.highlight=!t.highlight; document.getElementById('hlChk').className='round-chk'+(t.highlight?' on':''); save(); };
-  body.appendChild(hlRow);
-
-  // 10. COMPLETED
-  const doneRow = el('div','chk-row');
-  doneRow.innerHTML=`<div class="round-chk${t.completed?' on':''}" id="doneChk"></div><div class="chk-body"><div class="chk-title">Completed</div><div class="chk-sub" id="doneSub">${t.completed&&t.completedAt?'Completed today '+t.completedAt:'Mark as complete'}</div></div>`;
-  doneRow.onclick=()=>{
-    t.completed=!t.completed;
-    if(t.completed&&!t.completedAt) t.completedAt=fmtTime(new Date());
-    if(!t.completed) t.completedAt='';
-    document.getElementById('doneChk').className='round-chk'+(t.completed?' on':'');
-    document.getElementById('doneSub').textContent=t.completed&&t.completedAt?'Completed today '+t.completedAt:'Mark as complete';
-    save();
-  };
-  body.appendChild(doneRow);
-
-  // 11. CREATED
-  const creRow = el('div','d-row');
-  creRow.innerHTML=`<div class="d-row-ico">📅</div><div class="d-row-main"><div class="d-row-title">Created</div><div class="d-row-sub">today ${t.createdAt||'—'}</div></div>`;
-  body.appendChild(creRow);
 }
 
-function el(tag, cls){ const e=document.createElement(tag); if(cls) e.className=cls; return e; }
-
-function rebuildSubtasks(t){
-  const list=document.getElementById('stList');
-  if(!list) return;
-  list.innerHTML='';
-  t.subtasks.forEach((st,i)=>{
-    const row=el('div','st-row');
-    row.innerHTML=`<div class="chk-circle${st.done?' on':''}" id="stc${i}"></div><div class="st-label${st.done?' done':''}" id="stl${i}">${st.label}</div>`;
-    row.onclick=()=>{
-      st.done=!st.done;
-      document.getElementById('stc'+i).className='chk-circle'+(st.done?' on':'');
-      document.getElementById('stl'+i).className='st-label'+(st.done?' done':'');
-      const tObj=D.subjects[curSub].topics[curTopic];
-      if(tObj.subtasks.every(s=>s.done)&&!tObj.completedAt){
-        tObj.completed=true; tObj.completedAt=fmtTime(new Date());
-        const dc=document.getElementById('doneChk');
-        const ds=document.getElementById('doneSub');
-        if(dc) dc.className='round-chk on';
-        if(ds) ds.textContent='Completed today '+tObj.completedAt;
-      }
-      save();
-    };
-    list.appendChild(row);
-  });
-}
-
-function setPri(v){
-  if(curTopic===null) return;
-  const t=D.subjects[curSub].topics[curTopic];
-  t.priority=v;
-  ['none','Low','Medium','High'].forEach(x=>{ const e=document.getElementById('pr_'+x); if(e) e.className='p-radio'+(x===v?' sel':''); });
-  const lbl=document.getElementById('priLabel'); if(lbl) lbl.textContent=v==='none'?'None':v;
-  save();
-}
-
-// Tags
-function renderTagChips(t){
-  const area=document.getElementById('tagsArea'); if(!area) return;
-  const oldInp=document.getElementById('tagInp');
-  area.innerHTML='';
-  curTags.forEach((tag,i)=>{
-    const chip=el('div','tag-chip');
-    chip.innerHTML=tag+`<span class="tag-x" onclick="removeTag(${i})">×</span>`;
-    area.appendChild(chip);
-  });
-  const inp=document.createElement('input');
-  inp.className='tag-inp'; inp.id='tagInp'; inp.placeholder='Tag लिखें, Enter दबाएं';
-  inp.onkeydown=e=>{
-    if(e.key==='Enter'||e.key===','){
-      e.preventDefault();
-      const v=inp.value.trim().replace(',','');
-      if(v&&!curTags.includes(v)){ curTags.push(v); renderTagChips(D.subjects[curSub].topics[curTopic]); }
-      else inp.value='';
-    }
-  };
-  area.appendChild(inp);
-}
-function removeTag(i){ curTags.splice(i,1); renderTagChips(D.subjects[curSub].topics[curTopic]); }
-
-// Save & go back
-function saveAndBack(){
-  if(curTopic===null) return;
-  const t=D.subjects[curSub].topics[curTopic];
-  const notes=document.getElementById('dNotes'); if(notes) t.notes=notes.value;
-  t.tags=[...curTags];
-  save();
-  document.getElementById('detailScreen').classList.remove('active');
-  document.getElementById('homeScreen').classList.add('active');
-  renderAll();
-}
-
-document.getElementById('detailBack').onclick = saveAndBack;
-document.getElementById('saveFab').onclick = saveAndBack;
-document.getElementById('deleteTopicBtn').onclick = ()=>{
-  if(!confirm('इस टॉपिक को डिलीट करें?')) return;
-  D.subjects[curSub].topics.splice(curTopic,1);
-  save();
+document.getElementById('detailBack').onclick = () => {
   document.getElementById('detailScreen').classList.remove('active');
   document.getElementById('homeScreen').classList.add('active');
   renderAll();
 };
 
-// INIT
+document.getElementById('saveFab').onclick = () => {
+  const t = D.subjects[curSub].topics[curTopic];
+  t.notes = document.getElementById('dNotes').value;
+  const allDone = t.subtasks.every(x=>x.done);
+  if(allDone && !t.completed) { t.completed = true; t.completedAt = fmtTime(new Date()); }
+  else if(!allDone) { t.completed = false; t.completedAt = ''; }
+  save();
+  document.getElementById('detailBack').click();
+};
+
+document.getElementById('deleteTopicBtn').onclick = () => {
+  if(confirm('क्या आप सच में इस टॉपिक को डिलीट करना चाहते हैं?')){
+    D.subjects[curSub].topics.splice(curTopic, 1);
+    save();
+    document.getElementById('detailBack').click();
+  }
+};
+
+// ════ SETTINGS SIDEBAR LOGIC ════
+const sidebar = document.getElementById('settingsSidebar');
+const overlay = document.getElementById('sidebarOverlay');
+
+document.getElementById('openSettingsBtn').onclick = () => {
+  sidebar.style.left = '0';
+  overlay.style.display = 'block';
+  renderSettingsList();
+};
+
+function closeSettings() {
+  sidebar.style.left = '-320px';
+  overlay.style.display = 'none';
+}
+document.getElementById('closeSettingsBtn').onclick = closeSettings;
+overlay.onclick = closeSettings;
+
+function renderSettingsList() {
+  const list = document.getElementById('settingsSubList');
+  list.innerHTML = '';
+  if(!D.subjects.length) {
+    list.innerHTML = '<p style="font-size:13px;color:var(--muted);">कोई सब्जेक्ट नहीं है।</p>';
+    return;
+  }
+  
+  D.subjects.forEach((s, i) => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:12px 10px;border-bottom:1px solid var(--border);';
+    
+    const done = s.topics.filter(t=>t.subtasks.every(x=>x.done)).length;
+    const total = s.topics.length;
+    
+    row.innerHTML = `
+      <div>
+        <div style="font-weight:600;font-size:14px;color:var(--text);">${s.name}</div>
+        <div style="font-size:11px;color:var(--muted);">प्रोग्रेस: ${done}/${total} टॉपिक्स</div>
+      </div>
+      <button style="background:transparent;border:none;color:#e74c3c;font-size:20px;cursor:pointer;" title="Delete">🗑</button>
+    `;
+    
+    // Delete Subject Button
+    row.querySelector('button').onclick = () => {
+      if(confirm(`क्या आप सच में '${s.name}' और इसके सारे टॉपिक्स डिलीट करना चाहते हैं?`)) {
+        D.subjects.splice(i, 1);
+        if(curSub >= D.subjects.length) curSub = Math.max(0, D.subjects.length-1);
+        save();
+        renderAll();
+        renderSettingsList(); // लिस्ट को रिफ्रेश करें
+      }
+    };
+    list.appendChild(row);
+  });
+}
+
+// ════ START APP ════
 renderAll();
 </script>
 </body>
