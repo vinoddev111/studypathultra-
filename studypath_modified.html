@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyPath Pro (Modified)</title>
+<style>
+body{font-family:sans-serif;margin:0;background:#f5f9f7}
+.hdr{background:#0f9e70;color:#fff;padding:14px;display:flex;align-items:center;justify-content:space-between}
+.sub-bar{display:flex;gap:8px;padding:10px;overflow-x:auto;background:#fff;border-bottom:1px solid #ddd}
+.s-tab{padding:8px 14px;border-radius:20px;background:#e6f7f1;cursor:pointer;white-space:nowrap}
+.s-tab.active{background:#0f9e70;color:#fff}
+.topics{padding:14px}
+.card{background:#fff;border-radius:10px;padding:12px;margin-bottom:8px;border:1px solid #ddd;cursor:grab}
+.fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:#0f9e70;color:#fff;font-size:28px;border:none}
+.settings{position:fixed;left:0;top:0;bottom:0;width:260px;background:#fff;border-right:1px solid #ddd;padding:14px;display:none;overflow:auto}
+.settings h3{margin-top:0}
+</style>
+</head>
+<body>
+
+<div class="settings" id="settingsPanel">
+<h3>Subjects Progress</h3>
+<div id="settingsSubjects"></div>
+<hr>
+<b>Developer: Dev</b>
+</div>
+
+<div class="hdr">
+<button onclick="toggleSettings()">⚙</button>
+<b>📚 StudyPath Pro</b>
+<span></span>
+</div>
+
+<div class="sub-bar" id="subBar"></div>
+<div class="topics" id="topics"></div>
+
+<button class="fab" onclick="addTopic()">+</button>
+
+<script>
+
+const defaultSubjects=[
+{
+name:"शिक्षा मनोविज्ञान",
+topics:[
+"शिक्षा मनोविज्ञान की प्रकृति",
+"सर्वांगीण विकास",
+"अधिगम",
+"अभिप्रेरणा",
+"बुद्धि",
+"संवेगात्मक बुद्धि",
+"सृजनात्मकता",
+"व्यक्तित्व",
+"समायोजन एवं मानसिक स्वास्थ्य"
+]
+},
+{
+name:"भूगोल",
+topics:[
+"राजस्थान भूगोल",
+"विश्व भूगोल",
+"भारत भूगोल"
+]
+},
+{
+name:"अर्थव्यवस्था",
+topics:[
+"कृषि विकास",
+"उद्योग और सेवा क्षेत्र",
+"विदेश व्यापार",
+"नवीनतम बजट"
+]
+},
+{
+name:"राजस्थान इतिहास संस्कृति",
+topics:[
+"प्राचीन सभ्यताएँ",
+"राजस्थान का इतिहास",
+"स्वतंत्रता संग्राम",
+"लोक देवता",
+"मेले और त्यौहार"
+]
+},
+{
+name:"राजनीति विज्ञान",
+topics:[
+"संविधान",
+"मूल अधिकार",
+"संसद",
+"न्यायपालिका",
+"पंचायती राज"
+]
+}
+]
+
+let data=JSON.parse(localStorage.getItem("studydata")||"null")||{subjects:defaultSubjects}
+
+let currentSubject=0
+let dragIndex=null
+
+function save(){
+localStorage.setItem("studydata",JSON.stringify(data))
+}
+
+function renderSubjects(){
+const bar=document.getElementById("subBar")
+bar.innerHTML=""
+data.subjects.forEach((s,i)=>{
+const tab=document.createElement("div")
+tab.className="s-tab"+(i===currentSubject?" active":"")
+tab.textContent=s.name
+tab.onclick=()=>{currentSubject=i;render()}
+
+tab.oncontextmenu=(e)=>{
+e.preventDefault()
+subjectMenu(i)
+}
+
+bar.appendChild(tab)
+})
+}
+
+function subjectMenu(i){
+
+let action=prompt("1 Edit Subject\n2 Delete Subject\n3 Add Topic")
+
+if(action=="1"){
+let name=prompt("New name",data.subjects[i].name)
+if(name){data.subjects[i].name=name;save();render()}
+}
+
+if(action=="2"){
+if(confirm("Delete subject?")){
+data.subjects.splice(i,1)
+currentSubject=0
+save()
+render()
+}
+}
+
+if(action=="3"){
+addTopic()
+}
+
+}
+
+function renderTopics(){
+
+const list=document.getElementById("topics")
+list.innerHTML=""
+
+let s=data.subjects[currentSubject]
+
+s.topics.forEach((t,i)=>{
+
+const card=document.createElement("div")
+card.className="card"
+card.textContent=t
+card.draggable=true
+
+card.ondragstart=()=>{dragIndex=i}
+card.ondragover=(e)=>e.preventDefault()
+
+card.ondrop=()=>{
+let temp=s.topics[dragIndex]
+s.topics[dragIndex]=s.topics[i]
+s.topics[i]=temp
+save()
+renderTopics()
+}
+
+card.onclick=()=>topicMenu(i)
+
+list.appendChild(card)
+
+})
+
+}
+
+function topicMenu(i){
+
+let action=prompt("1 Edit Topic\n2 Delete Topic\n3 Reminder\n4 Upload PDF")
+
+let s=data.subjects[currentSubject]
+
+if(action=="1"){
+let name=prompt("Edit topic",s.topics[i])
+if(name){s.topics[i]=name;save();renderTopics()}
+}
+
+if(action=="2"){
+s.topics.splice(i,1)
+save()
+renderTopics()
+}
+
+if(action=="3"){
+alert("Reminder feature enabled (browser reminder basic)")
+}
+
+if(action=="4"){
+let input=document.createElement("input")
+input.type="file"
+input.accept="application/pdf"
+input.click()
+}
+
+}
+
+function addTopic(){
+
+let name=prompt("Topic name")
+
+if(!name)return
+
+data.subjects[currentSubject].topics.push(name)
+
+save()
+renderTopics()
+
+}
+
+function toggleSettings(){
+
+let p=document.getElementById("settingsPanel")
+
+p.style.display=p.style.display=="block"?"none":"block"
+
+renderSettings()
+
+}
+
+function renderSettings(){
+
+const box=document.getElementById("settingsSubjects")
+
+box.innerHTML=""
+
+data.subjects.forEach(s=>{
+
+let total=s.topics.length
+let pct=total?Math.round((total/total)*100):0
+
+let div=document.createElement("div")
+div.textContent=s.name+" — "+pct+"%"
+
+box.appendChild(div)
+
+})
+
+}
+
+function render(){
+renderSubjects()
+renderTopics()
+}
+
+render()
+
+</script>
+
+</body>
+</html>
